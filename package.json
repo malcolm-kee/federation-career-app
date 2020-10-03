@@ -1,0 +1,45 @@
+{
+  "name": "federation-career-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "build:dev": "webpack --mode development",
+    "start": "webpack-dev-server --open --mode development",
+    "start:live": "webpack-dev-server --open --mode development --liveReload"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Malcolm Kee",
+    "email": "malcolm.keeweesiong@gmail.com"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "@tailwindcss/ui": "^0.6.2",
+    "autoprefixer": "^10.0.1",
+    "babel-loader": "8.1.0",
+    "cross-env": "^7.0.2",
+    "css-loader": "^4.3.0",
+    "dotenv": "^8.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^0.11.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "postcss": "^8.1.1",
+    "postcss-cli": "^8.0.0",
+    "postcss-loader": "^4.0.3",
+    "regex-escape": "^3.4.10",
+    "style-loader": "1.2.1",
+    "tailwindcss": "^1.8.10",
+    "webpack": "5.0.0-rc.3",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "3.11.0"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "heroicons": "^0.4.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-query": "^2.23.0"
+  }
+}
