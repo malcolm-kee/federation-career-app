@@ -11,6 +11,9 @@ const dependencies = require('./package.json').dependencies;
 
 const PACKAGES_TO_COMPILE = ['heroicons'];
 
+const mainUrl =
+  process.env.MAIN_URL || 'https://federation-main-app.vercel.app';
+
 /**
  * @returns {import('webpack').Configuration}
  */
@@ -83,7 +86,9 @@ module.exports = (env, { mode }) => {
       new ModuleFederationPlugin({
         name: exposedName,
         filename: 'remoteEntry.js',
-        remotes: {},
+        remotes: {
+          main: `malcolm@${mainUrl}/remoteEntry.js`,
+        },
         exposes: {
           './career': './src/career',
         },
@@ -99,7 +104,7 @@ module.exports = (env, { mode }) => {
           },
           'react-query': {
             singleton: true,
-            requiredVersion: dependencies['react-dom'],
+            requiredVersion: dependencies['react-query'],
           },
         },
       }),
