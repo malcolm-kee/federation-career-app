@@ -1,6 +1,6 @@
-# federation-mini-app
+# federation-career-app
 
-https://federation-mini-app.vercel.app/
+https://federation-career-app.vercel.app/
 
 Example application using webpack 5 Module Federation.
 
