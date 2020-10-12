@@ -4,8 +4,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "build:dev": "webpack --mode development",
-    "start": "webpack-dev-server --open --mode development",
-    "start:live": "webpack-dev-server --open --mode development --liveReload"
+    "start": "webpack serve --mode development"
   },
   "license": "MIT",
   "author": {
@@ -23,16 +22,16 @@
     "css-loader": "^4.3.0",
     "dotenv": "^8.2.0",
     "html-webpack-plugin": "^4.5.0",
-    "mini-css-extract-plugin": "^0.11.3",
+    "mini-css-extract-plugin": "^1.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "postcss": "^8.1.1",
-    "postcss-cli": "^8.0.0",
-    "postcss-loader": "^4.0.3",
+    "postcss-cli": "^8.1.0",
+    "postcss-loader": "^4.0.4",
     "regex-escape": "^3.4.10",
-    "style-loader": "1.2.1",
-    "tailwindcss": "^1.8.10",
-    "webpack": "5.0.0-rc.3",
-    "webpack-cli": "^3.3.12",
+    "style-loader": "^2.0.0",
+    "tailwindcss": "^1.8.13",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0",
     "webpack-dev-server": "3.11.0"
   },
   "dependencies": {
