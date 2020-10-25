@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import Briefcase from 'heroicons/react/solid/Briefcase';
 import ChevronRight from 'heroicons/react/solid/ChevronRight';
-import * as React from 'react';
 
 export const CareerItem = ({
   jobTitle,

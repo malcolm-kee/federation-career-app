@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useQuery } from 'react-query';
 import './career.css';
 import { CareerItem } from './components/career-item';
