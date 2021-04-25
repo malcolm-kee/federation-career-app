@@ -1,15 +1,15 @@
 require('dotenv').config();
 
-const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const regexEscape = require('regex-escape');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const path = require('path');
 
-const dependencies = require('./package.json').dependencies;
+const pkgJson = require('./package.json');
 
-const PACKAGES_TO_COMPILE = ['heroicons'];
+const dependencies = pkgJson.dependencies;
 
 const mainUrl =
   process.env.MAIN_URL || 'https://federation-main-app.vercel.app';
@@ -18,18 +18,21 @@ const mainUrl =
  * @returns {import('webpack').Configuration}
  */
 module.exports = (env, { mode }) => {
-  const publicPath =
-    process.env.PUBLIC_PATH ||
-    (mode === 'development'
-      ? 'http://localhost:8082/'
-      : 'https://federation-career-app.vercel.app/');
-
-  const exposedName = process.env.EXPOSED_NAME || 'career';
+  const publicPath = sanitizePublicPath(
+    process.env.VERCEL_URL ||
+      process.env.PUBLIC_PATH ||
+      (mode === 'development'
+        ? 'http://localhost:8082/'
+        : 'https://federation-career-app.vercel.app/')
+  );
 
   return {
     mode,
     output: {
       publicPath,
+      clean: true,
+      filename: '[name].[contenthash].js',
+      path: path.resolve(__dirname, 'dist'), // workaround for https://github.com/shellscape/webpack-manifest-plugin/issues/256
     },
 
     resolve: {
@@ -47,9 +50,6 @@ module.exports = (env, { mode }) => {
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
-              options: {
-                hmr: mode === 'development',
-              },
             },
             {
               loader: 'css-loader',
@@ -65,16 +65,6 @@ module.exports = (env, { mode }) => {
         },
         {
           test: /\.(js|jsx)$/,
-          exclude: (modulePath) =>
-            /node_modules/.test(modulePath) &&
-            // whitelist specific es6 module
-            !new RegExp(
-              `node_modules[\\\\/](${PACKAGES_TO_COMPILE.map((module) =>
-                module.replace(/\//, path.sep)
-              )
-                .map(regexEscape)
-                .join('|')})[\\\\/]`
-            ).test(modulePath),
           use: {
             loader: 'babel-loader',
           },
@@ -84,14 +74,12 @@ module.exports = (env, { mode }) => {
 
     plugins: [
       new ModuleFederationPlugin({
-        name: exposedName,
-        filename: 'remoteEntry.js',
+        name: pkgJson.federations.name,
+        filename: 'remoteEntry.[contenthash].js',
         remotes: {
           main: `malcolm@${mainUrl}/remoteEntry.js`,
         },
-        exposes: {
-          './career': './src/career',
-        },
+        exposes: pkgJson.federations.exposes,
         shared: {
           ...dependencies,
           react: {
@@ -113,6 +101,19 @@ module.exports = (env, { mode }) => {
       }),
       new MiniCssExtractPlugin(),
       mode === 'production' && new OptimizeCssAssetsPlugin(),
+      new WebpackManifestPlugin(),
     ].filter(Boolean),
   };
+};
+
+/**
+ *
+ * @param {string} str
+ * @returns
+ */
+const sanitizePublicPath = (str) => {
+  const withTrailingSlash = str.endsWith('/') ? str : `${str}/`;
+  return withTrailingSlash.startsWith('http')
+    ? withTrailingSlash
+    : `https://${withTrailingSlash}`;
 };
