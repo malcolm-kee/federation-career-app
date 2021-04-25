@@ -18,7 +18,7 @@ const mainUrl =
  * @returns {import('webpack').Configuration}
  */
 module.exports = (env, { mode }) => {
-  const publicPath = addTrailingSlash(
+  const publicPath = sanitizePublicPath(
     process.env.VERCEL_URL ||
       process.env.PUBLIC_PATH ||
       (mode === 'development'
@@ -126,4 +126,9 @@ module.exports = (env, { mode }) => {
  * @param {string} str
  * @returns
  */
-const addTrailingSlash = (str) => (str.endsWith('/') ? str : `${str}/`);
+const sanitizePublicPath = (str) => {
+  const withTrailingSlash = str.endsWith('/') ? str : `${str}/`;
+  return withTrailingSlash.startsWith('http')
+    ? withTrailingSlash
+    : `https://${withTrailingSlash}`;
+};
