@@ -4,8 +4,12 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const path = require('path');
 
-const dependencies = require('./package.json').dependencies;
+const pkgJson = require('./package.json');
+
+const dependencies = pkgJson.dependencies;
 
 const mainUrl =
   process.env.MAIN_URL || 'https://federation-main-app.vercel.app';
@@ -20,12 +24,13 @@ module.exports = (env, { mode }) => {
       ? 'http://localhost:8082/'
       : 'https://federation-career-app.vercel.app/');
 
-  const exposedName = process.env.EXPOSED_NAME || 'career';
-
   return {
     mode,
     output: {
       publicPath,
+      clean: true,
+      filename: '[name].[contenthash].js',
+      path: path.resolve(__dirname, 'dist'), // workaround for https://github.com/shellscape/webpack-manifest-plugin/issues/256
     },
 
     resolve: {
@@ -67,14 +72,12 @@ module.exports = (env, { mode }) => {
 
     plugins: [
       new ModuleFederationPlugin({
-        name: exposedName,
-        filename: 'remoteEntry.js',
+        name: pkgJson.federations.name,
+        filename: 'remoteEntry.[contenthash].js',
         remotes: {
           main: `malcolm@${mainUrl}/remoteEntry.js`,
         },
-        exposes: {
-          './career': './src/career',
-        },
+        exposes: pkgJson.federations.exposes,
         shared: {
           ...dependencies,
           react: {
@@ -96,6 +99,20 @@ module.exports = (env, { mode }) => {
       }),
       new MiniCssExtractPlugin(),
       mode === 'production' && new OptimizeCssAssetsPlugin(),
+      new WebpackManifestPlugin(),
     ].filter(Boolean),
+
+    optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/](react|react-dom|react-query)[\\/]/,
+            name: 'vendor',
+            chunks: 'all',
+          },
+        },
+      },
+    },
   };
 };

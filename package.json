@@ -32,7 +32,8 @@
     "tailwindcss": "^2.1.2",
     "webpack": "^5.2.0",
     "webpack-cli": "^4.1.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-manifest-plugin": "^3.1.1"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.1",
@@ -41,5 +42,11 @@
     "react-dom": "^17.0.1",
     "react-query": "^3.13.12",
     "react-router-dom": "^5.2.0"
+  },
+  "federations": {
+    "name": "career",
+    "exposes": {
+      "./career": "./src/career"
+    }
   }
 }
