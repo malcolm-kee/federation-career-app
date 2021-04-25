@@ -26,6 +26,8 @@ module.exports = (env, { mode }) => {
         : 'https://federation-career-app.vercel.app/')
   );
 
+  console.log({ publicPath });
+
   return {
     mode,
     output: {
