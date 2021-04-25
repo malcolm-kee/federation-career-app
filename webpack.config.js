@@ -1,15 +1,11 @@
 require('dotenv').config();
 
-const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const regexEscape = require('regex-escape');
 
 const dependencies = require('./package.json').dependencies;
-
-const PACKAGES_TO_COMPILE = ['heroicons'];
 
 const mainUrl =
   process.env.MAIN_URL || 'https://federation-main-app.vercel.app';
@@ -47,9 +43,6 @@ module.exports = (env, { mode }) => {
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
-              options: {
-                hmr: mode === 'development',
-              },
             },
             {
               loader: 'css-loader',
@@ -65,16 +58,6 @@ module.exports = (env, { mode }) => {
         },
         {
           test: /\.(js|jsx)$/,
-          exclude: (modulePath) =>
-            /node_modules/.test(modulePath) &&
-            // whitelist specific es6 module
-            !new RegExp(
-              `node_modules[\\\\/](${PACKAGES_TO_COMPILE.map((module) =>
-                module.replace(/\//, path.sep)
-              )
-                .map(regexEscape)
-                .join('|')})[\\\\/]`
-            ).test(modulePath),
           use: {
             loader: 'babel-loader',
           },

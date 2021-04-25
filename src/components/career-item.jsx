@@ -1,6 +1,5 @@
 import cx from 'classnames';
-import Briefcase from 'heroicons/react/solid/Briefcase';
-import ChevronRight from 'heroicons/react/solid/ChevronRight';
+import { BriefcaseIcon, ChevronRightIcon } from '@heroicons/react/solid';
 
 export const CareerItem = ({
   jobTitle,
@@ -12,58 +11,58 @@ export const CareerItem = ({
   <a
     href="#"
     className={cx(
-      'block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out',
-      isLoading && 'animate-pulse',
+      'cr-block hover:cr-bg-gray-50 focus:cr-outline-none focus:cr-bg-gray-50 cr-transition cr-duration-150 cr-ease-in-out',
+      isLoading && 'cr-animate-pulse',
       className
     )}
   >
-    <div className="px-4 py-4 flex items-center sm:px-6">
-      <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+    <div className="cr-px-4 cr-py-4 cr-flex cr-items-center sm:cr-px-6">
+      <div className="cr-min-w-0 cr-flex-1 sm:cr-flex sm:cr-items-center sm:cr-justify-between">
         <div>
-          <div className="text-sm leading-5 font-medium text-indigo-600 truncate">
+          <div className="cr-text-sm cr-leading-5 cr-font-medium cr-text-indigo-600 cr-truncate">
             {jobTitle}{' '}
             {isLoading && (
-              <span className="inline-block bg-gray-300 w-36 h-5" />
+              <span className="cr-inline-block cr-bg-gray-300 cr-w-36 cr-h-5" />
             )}
-            <span className="ml-1 font-normal text-gray-500">
+            <span className="cr-ml-1 cr-font-normal cr-text-gray-500">
               in {department}{' '}
               {isLoading && (
-                <span className="inline-block bg-gray-300 w-24 h-5" />
+                <span className="cr-inline-block cr-bg-gray-300 cr-w-24 cr-h-5" />
               )}
             </span>
           </div>
-          <div className="mt-2 flex">
-            <div className="flex items-center text-sm leading-5 text-gray-500">
-              <Briefcase className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
+          <div className="cr-mt-2 cr-flex">
+            <div className="cr-flex cr-items-center cr-text-sm cr-leading-5 cr-text-gray-500">
+              <BriefcaseIcon className="cr-flex-shrink-0 cr-mr-1.5 cr-h-5 cr-w-5 cr-text-gray-400" />
               <span>
                 Level: {level}{' '}
                 {isLoading && (
-                  <span className="inline-block bg-gray-300 w-20 h-4" />
+                  <span className="cr-inline-block cr-bg-gray-300 cr-w-20 cr-h-4" />
                 )}
               </span>
             </div>
           </div>
         </div>
-        <div className="mt-4 flex-shrink-0 sm:mt-0">
+        <div className="cr-mt-4 cr-flex-shrink-0 sm:cr-mt-0">
           {!isLoading && (
-            <div className="flex overflow-hidden">
+            <div className="cr-flex cr-overflow-hidden">
               <img
-                className="inline-block h-6 w-6 rounded-full text-white shadow-solid"
+                className="cr-inline-block cr-h-6 cr-w-6 cr-rounded-full cr-text-white cr-shadow-solid"
                 src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
               />
               <img
-                className="-ml-1 inline-block h-6 w-6 rounded-full text-white shadow-solid"
+                className="cr--ml-1 cr-inline-block cr-h-6 cr-w-6 cr-rounded-full cr-text-white cr-shadow-solid"
                 src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
               />
               <img
-                className="-ml-1 inline-block h-6 w-6 rounded-full text-white shadow-solid"
+                className="cr--ml-1 cr-inline-block cr-h-6 cr-w-6 cr-rounded-full cr-text-white cr-shadow-solid"
                 src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
                 alt=""
               />
               <img
-                className="-ml-1 inline-block h-6 w-6 rounded-full text-white shadow-solid"
+                className="cr--ml-1 cr-inline-block cr-h-6 cr-w-6 cr-rounded-full cr-text-white cr-shadow-solid"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
               />
@@ -71,8 +70,8 @@ export const CareerItem = ({
           )}
         </div>
       </div>
-      <div className="ml-5 flex-shrink-0">
-        <ChevronRight className="h-5 w-5 text-gray-400" />
+      <div className="cr-ml-5 cr-flex-shrink-0">
+        <ChevronRightIcon className="cr-h-5 cr-w-5 cr-text-gray-400" />
       </div>
     </div>
   </a>
