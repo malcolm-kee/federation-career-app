@@ -26,8 +26,6 @@ module.exports = (env, { mode }) => {
         : 'https://federation-career-app.vercel.app/')
   );
 
-  console.log({ publicPath });
-
   return {
     mode,
     output: {
@@ -105,19 +103,6 @@ module.exports = (env, { mode }) => {
       mode === 'production' && new OptimizeCssAssetsPlugin(),
       new WebpackManifestPlugin(),
     ].filter(Boolean),
-
-    optimization: {
-      runtimeChunk: 'single',
-      splitChunks: {
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/](react|react-dom|react-query)[\\/]/,
-            name: 'vendor',
-            chunks: 'all',
-          },
-        },
-      },
-    },
   };
 };
 
