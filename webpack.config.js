@@ -18,12 +18,13 @@ const mainUrl =
  * @returns {import('webpack').Configuration}
  */
 module.exports = (env, { mode }) => {
-  const publicPath =
+  const publicPath = addTrailingSlash(
     process.env.VERCEL_URL ||
-    process.env.PUBLIC_PATH ||
-    (mode === 'development'
-      ? 'http://localhost:8082/'
-      : 'https://federation-career-app.vercel.app/');
+      process.env.PUBLIC_PATH ||
+      (mode === 'development'
+        ? 'http://localhost:8082/'
+        : 'https://federation-career-app.vercel.app/')
+  );
 
   return {
     mode,
@@ -117,3 +118,10 @@ module.exports = (env, { mode }) => {
     },
   };
 };
+
+/**
+ *
+ * @param {string} str
+ * @returns
+ */
+const addTrailingSlash = (str) => (str.endsWith('/') ? str : `${str}/`);
