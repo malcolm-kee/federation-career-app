@@ -19,7 +19,7 @@ export const CareerItem = ({
     <div className="cr-px-4 cr-py-4 cr-flex cr-items-center sm:cr-px-6">
       <div className="cr-min-w-0 cr-flex-1 sm:cr-flex sm:cr-items-center sm:cr-justify-between">
         <div>
-          <div className="cr-text-sm cr-leading-5 cr-font-medium cr-text-indigo-600 cr-truncate">
+          <div className="cr-text-sm cr-leading-5 cr-font-medium cr-text-pink-600 cr-truncate">
             {jobTitle}{' '}
             {isLoading && (
               <span className="cr-inline-block cr-bg-gray-300 cr-w-36 cr-h-5" />

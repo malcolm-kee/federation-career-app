@@ -14,7 +14,9 @@ export default function Career() {
 
   return (
     <div className="cr-max-w-6xl cr-mx-auto cr-px-2 sm:cr-px-6 cr-py-2">
-      <h1 className="cr-text-5xl cr-mb-6">Careers</h1>
+      <h1 className="cr-text-3xl sm:cr-text-5xl cr-mb-6 cr-text-center cr-font-bold">
+        Careers
+      </h1>
       <div className="cr-bg-white cr-shadow cr-overflow-hidden sm:cr-rounded-md">
         <ul>
           {isLoading &&
