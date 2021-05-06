@@ -35,6 +35,8 @@ module.exports = (env, { mode }) => {
       port: 8082,
     },
 
+    devtool: env === 'development' ? 'eval-cheap-source-map' : 'source-map',
+
     module: {
       rules: [
         {
@@ -68,9 +70,6 @@ module.exports = (env, { mode }) => {
       new ModuleFederationPlugin({
         name: pkgJson.federations.name,
         filename: 'remoteEntry.js',
-        remotes: {
-          main: `malcolm@${mainUrl}/remoteEntry.js`,
-        },
         exposes: pkgJson.federations.exposes,
         shared: {
           ...dependencies,
