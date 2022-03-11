@@ -11,6 +11,8 @@ const pkgJson = require('./package.json');
 
 const dependencies = pkgJson.dependencies;
 
+const port = process.env.PORT || 8082;
+
 const mainUrl =
   process.env.MAIN_URL || 'https://federation-main-app.vercel.app';
 
@@ -22,7 +24,7 @@ module.exports = (env, { mode }) => {
     process.env.VERCEL_URL ||
       process.env.PUBLIC_PATH ||
       (mode === 'development'
-        ? 'http://localhost:8082/'
+        ? `http://localhost:${port}/`
         : 'https://federation-career-app.vercel.app/')
   );
 
@@ -40,7 +42,7 @@ module.exports = (env, { mode }) => {
     },
 
     devServer: {
-      port: 8082,
+      port: port,
     },
 
     module: {
@@ -74,12 +76,14 @@ module.exports = (env, { mode }) => {
 
     plugins: [
       new ModuleFederationPlugin({
-        name: pkgJson.federations.name,
-        filename: 'remoteEntry.[contenthash].js',
+        name: 'career',
+        exposes: {
+          './career': './src/career',
+        },
+        filename: 'remoteEntry.js',
         remotes: {
           main: `malcolm@${mainUrl}/remoteEntry.js`,
         },
-        exposes: pkgJson.federations.exposes,
         shared: {
           ...dependencies,
           react: {
