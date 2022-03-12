@@ -1,6 +1,9 @@
 import { useQuery } from 'react-query';
 import './career.css';
 import { CareerItem } from './components/career-item';
+import * as React from 'react';
+
+const Banner = React.lazy(() => import('marketing/banner'));
 
 export default function Career() {
   const { data, isLoading } = useQuery(['careers'], () =>
@@ -43,6 +46,7 @@ export default function Career() {
             ))}
         </ul>
       </div>
+      <Banner />
     </div>
   );
 }

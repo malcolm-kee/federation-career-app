@@ -3,38 +3,33 @@ require('dotenv').config();
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const path = require('path');
 
 const pkgJson = require('./package.json');
 
 const dependencies = pkgJson.dependencies;
 
-const port = process.env.PORT || 8082;
-
-const mainUrl =
-  process.env.MAIN_URL || 'https://federation-main-app.vercel.app';
+const port = process.env.PORT || 8182;
 
 /**
  * @returns {import('webpack').Configuration}
  */
 module.exports = (env, { mode }) => {
-  const publicPath = sanitizePublicPath(
-    process.env.VERCEL_URL ||
-      process.env.PUBLIC_PATH ||
-      (mode === 'development'
-        ? `http://localhost:${port}/`
-        : 'https://federation-career-app.vercel.app/')
-  );
+  const isProd = mode === 'production';
 
   return {
     mode,
     output: {
-      publicPath,
-      clean: true,
-      filename: '[name].[contenthash].js',
+      publicPath: 'auto',
+      filename: isProd
+        ? 'static/js/[name].[contenthash].js'
+        : 'static/js/[name].js',
+      chunkFilename: isProd
+        ? 'static/js/[name].[contenthash].js'
+        : 'static/js/[name].chunk.js',
       path: path.resolve(__dirname, 'dist'), // workaround for https://github.com/shellscape/webpack-manifest-plugin/issues/256
+      clean: true,
     },
 
     resolve: {
@@ -74,6 +69,8 @@ module.exports = (env, { mode }) => {
       ],
     },
 
+    devtool: isProd ? 'source-map' : 'cheap-module-source-map',
+
     plugins: [
       new ModuleFederationPlugin({
         name: 'career',
@@ -82,7 +79,10 @@ module.exports = (env, { mode }) => {
         },
         filename: 'remoteEntry.js',
         remotes: {
-          main: `malcolm@${mainUrl}/remoteEntry.js`,
+          marketing: `marketing@${
+            process.env.MARKETING_URL ||
+            'https://federation-marketing-app.vercel.app/'
+          }/remoteEntry.js`,
         },
         shared: {
           ...dependencies,
@@ -104,20 +104,10 @@ module.exports = (env, { mode }) => {
         template: './src/index.html',
       }),
       new MiniCssExtractPlugin(),
-      mode === 'production' && new OptimizeCssAssetsPlugin(),
-      new WebpackManifestPlugin(),
     ].filter(Boolean),
+    optimization: {
+      minimize: isProd,
+      minimizer: ['...', new CssMinimizerPlugin()],
+    },
   };
-};
-
-/**
- *
- * @param {string} str
- * @returns
- */
-const sanitizePublicPath = (str) => {
-  const withTrailingSlash = str.endsWith('/') ? str : `${str}/`;
-  return withTrailingSlash.startsWith('http')
-    ? withTrailingSlash
-    : `https://${withTrailingSlash}`;
 };
