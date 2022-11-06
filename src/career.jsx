@@ -1,7 +1,7 @@
-import { useQuery } from 'react-query';
-import './career.css';
-import { CareerItem } from './components/career-item';
 import * as React from 'react';
+import { useQuery } from 'react-query';
+import styles from './career.module.css';
+import { CareerItem } from './components/career-item';
 
 const Banner = React.lazy(() => import('marketing/banner'));
 
@@ -16,27 +16,19 @@ export default function Career() {
   );
 
   return (
-    <div className="cr-max-w-6xl cr-mx-auto cr-px-2 sm:cr-px-6 cr-py-2">
-      <h1 className="cr-text-3xl sm:cr-text-5xl cr-mb-6 cr-text-center cr-font-bold">
-        Careers
-      </h1>
-      <div className="cr-bg-white cr-shadow cr-overflow-hidden sm:cr-rounded-md">
+    <div className={styles.root}>
+      <h1 className={styles.title}>Careers</h1>
+      <div className={styles.careerList}>
         <ul>
           {isLoading &&
             Array.from({ length: 5 }).map((_, i) => (
-              <li
-                className={i !== 0 ? 'cr-border-t cr-border-gray-200' : ''}
-                key={i}
-              >
+              <li className={styles.careerItem} key={i}>
                 <CareerItem isLoading />
               </li>
             ))}
           {data &&
-            data.map((job, index) => (
-              <li
-                className={index !== 0 ? 'cr-border-t cr-border-gray-200' : ''}
-                key={job._id}
-              >
+            data.map((job) => (
+              <li className={styles.careerItem} key={job._id}>
                 <CareerItem
                   jobTitle={job.title}
                   department={job.department}

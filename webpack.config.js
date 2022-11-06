@@ -38,6 +38,7 @@ module.exports = (env, { mode }) => {
 
     devServer: {
       port: port,
+      hot: false,
     },
 
     module: {
@@ -50,7 +51,16 @@ module.exports = (env, { mode }) => {
             },
             {
               loader: 'css-loader',
-              options: { sourceMap: true, importLoaders: 1 },
+              options: {
+                sourceMap: true,
+                importLoaders: 1,
+                modules: {
+                  auto: true,
+                  localIdentName: isProd
+                    ? '[hash:base64]'
+                    : '[path][name]__[local]',
+                },
+              },
             },
             {
               loader: 'postcss-loader',

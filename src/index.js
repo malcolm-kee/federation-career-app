@@ -1,1 +1,2 @@
-import("./App");
+import './reset.css';
+import('./App');

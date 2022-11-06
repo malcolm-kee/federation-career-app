@@ -1,5 +1,7 @@
 import cx from 'classnames';
 import { BriefcaseIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import styles from './career-item.module.css';
+import * as React from 'react';
 
 export const CareerItem = ({
   jobTitle,
@@ -7,72 +9,115 @@ export const CareerItem = ({
   level,
   isLoading,
   className,
-}) => (
-  <a
-    href="#"
-    className={cx(
-      'cr-block hover:cr-bg-gray-50 focus:cr-outline-none focus:cr-bg-gray-50 cr-transition cr-duration-150 cr-ease-in-out',
-      isLoading && 'cr-animate-pulse',
-      className
-    )}
-  >
-    <div className="cr-px-4 cr-py-4 cr-flex cr-items-center sm:cr-px-6">
-      <div className="cr-min-w-0 cr-flex-1 sm:cr-flex sm:cr-items-center sm:cr-justify-between">
-        <div>
-          <div className="cr-text-sm cr-leading-5 cr-font-medium cr-text-pink-600 cr-truncate">
-            {jobTitle}{' '}
-            {isLoading && (
-              <span className="cr-inline-block cr-bg-gray-300 cr-w-36 cr-h-5" />
-            )}
-            <span className="cr-ml-1 cr-font-normal cr-text-gray-500">
-              in {department}{' '}
+}) => {
+  const [images] = React.useState(() => getRandomImages());
+
+  return (
+    <a
+      href="#"
+      className={cx(styles.root, isLoading && styles.rootLoading, className)}
+    >
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <div>
+            <div className={styles.title}>
+              {jobTitle}{' '}
               {isLoading && (
-                <span className="cr-inline-block cr-bg-gray-300 cr-w-24 cr-h-5" />
+                <span
+                  className={cx(styles.placeholder, styles.titlePlaceholder)}
+                />
               )}
-            </span>
-          </div>
-          <div className="cr-mt-2 cr-flex">
-            <div className="cr-flex cr-items-center cr-text-sm cr-leading-5 cr-text-gray-500">
-              <BriefcaseIcon className="cr-flex-shrink-0 cr-mr-1.5 cr-h-5 cr-w-5 cr-text-gray-400" />
-              <span>
-                Level: {level}{' '}
+              <span className={styles.department}>
+                in {department}
                 {isLoading && (
-                  <span className="cr-inline-block cr-bg-gray-300 cr-w-20 cr-h-4" />
+                  <span
+                    className={cx(
+                      styles.placeholder,
+                      styles.departmentPlaceholder
+                    )}
+                  />
+                )}
+              </span>
+            </div>
+            <div className={styles.description}>
+              <BriefcaseIcon className={cx(styles.icon, styles.descIcon)} />
+              <span>
+                Level: {level}
+                {isLoading && (
+                  <span
+                    className={cx(styles.placeholder, styles.descPlaceholder)}
+                  />
                 )}
               </span>
             </div>
           </div>
+          <div className={styles.applicants}>
+            {isLoading ? (
+              Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  className={cx(
+                    styles.placeholder,
+                    styles.applicationPreviewPlaceholder
+                  )}
+                  key={index}
+                />
+              ))
+            ) : (
+              <>
+                {images.map((src) => (
+                  <img
+                    className={styles.applicantPreview}
+                    src={src}
+                    alt=""
+                    key={src}
+                  />
+                ))}
+              </>
+            )}
+          </div>
         </div>
-        <div className="cr-mt-4 cr-flex-shrink-0 sm:cr-mt-0">
-          {!isLoading && (
-            <div className="cr-flex cr-overflow-hidden">
-              <img
-                className="cr-inline-block cr-h-6 cr-w-6 cr-rounded-full cr-text-white cr-shadow-solid"
-                src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-              />
-              <img
-                className="cr--ml-1 cr-inline-block cr-h-6 cr-w-6 cr-rounded-full cr-text-white cr-shadow-solid"
-                src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-              />
-              <img
-                className="cr--ml-1 cr-inline-block cr-h-6 cr-w-6 cr-rounded-full cr-text-white cr-shadow-solid"
-                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-                alt=""
-              />
-              <img
-                className="cr--ml-1 cr-inline-block cr-h-6 cr-w-6 cr-rounded-full cr-text-white cr-shadow-solid"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-              />
-            </div>
-          )}
+        <div className={styles.moreSection}>
+          <ChevronRightIcon className={styles.icon} />
         </div>
       </div>
-      <div className="cr-ml-5 cr-flex-shrink-0">
-        <ChevronRightIcon className="cr-h-5 cr-w-5 cr-text-gray-400" />
-      </div>
-    </div>
-  </a>
-);
+    </a>
+  );
+};
+
+const getRandomImages = () => {
+  const len = randomInt(1, applicationsImages.length);
+  const result = shuffle(applicationsImages.slice()).slice(0, len);
+  return result;
+};
+
+const applicationsImages = [
+  'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80',
+  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+];
+
+const randomInt = (min, max) => Math.random() * (max - min) + min;
+
+/**
+ *  Fisher-Yates (aka Knuth) Shuffle from https://stackoverflow.com/a/2450976
+ */
+function shuffle(array) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
