@@ -5,6 +5,7 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const path = require('path');
+const ExternalRemotesPlugin = require('external-remotes-plugin');
 
 const pkgJson = require('./package.json');
 
@@ -82,6 +83,7 @@ module.exports = (env, { mode }) => {
     devtool: isProd ? 'source-map' : 'cheap-module-source-map',
 
     plugins: [
+      new ExternalRemotesPlugin(),
       new ModuleFederationPlugin({
         name: 'career',
         exposes: {
@@ -89,10 +91,7 @@ module.exports = (env, { mode }) => {
         },
         filename: 'remoteEntry.js',
         remotes: {
-          marketing: `marketing@${
-            process.env.MARKETING_URL ||
-            'https://federation-marketing-app.vercel.app/'
-          }/remoteEntry.js`,
+          marketing: `marketing@[window.appUrls?.marketing]/remoteEntry.js`,
         },
         shared: {
           ...dependencies,
@@ -112,8 +111,20 @@ module.exports = (env, { mode }) => {
       }),
       new HtmlWebPackPlugin({
         template: './src/index.html',
+        templateParameters: {
+          marketingUrl:
+            process.env.MARKETING_URL ||
+            'https://federation-marketing-app.vercel.app',
+        },
       }),
-      new MiniCssExtractPlugin(),
+      new MiniCssExtractPlugin(
+        isProd
+          ? {
+              filename: 'static/css/[name].[contenthash].css',
+              chunkFilename: 'static/css/[name].[contenthash].css',
+            }
+          : {}
+      ),
     ].filter(Boolean),
     optimization: {
       minimize: isProd,
