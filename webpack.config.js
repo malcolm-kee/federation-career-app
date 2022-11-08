@@ -88,6 +88,7 @@ module.exports = (env, { mode }) => {
         name: 'career',
         exposes: {
           './career': './src/career',
+          './plugin': './src/plugin',
         },
         filename: 'remoteEntry.js',
         remotes: {
@@ -95,17 +96,25 @@ module.exports = (env, { mode }) => {
         },
         shared: {
           ...dependencies,
+          '@mkeeorg/federation-ui': {
+            singleton: true,
+            requiredVersion: '*',
+            version: '0',
+          },
           react: {
             singleton: true,
-            requiredVersion: dependencies.react,
+            requiredVersion: '*',
+            version: '0',
           },
           'react-dom': {
             singleton: true,
-            requiredVersion: dependencies['react-dom'],
+            requiredVersion: '*',
+            version: '0',
           },
           'react-query': {
             singleton: true,
-            requiredVersion: dependencies['react-query'],
+            requiredVersion: '*',
+            version: '0',
           },
         },
       }),
