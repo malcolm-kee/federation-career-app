@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useQuery } from 'react-query';
 import styles from './career.module.css';
 import { CareerItem } from './components/career-item';
+import { Slot } from '@mkeeorg/federation-ui';
 
 const Banner = React.lazy(() => import('marketing/banner'));
 
@@ -18,6 +19,7 @@ export function Career() {
   return (
     <div className={styles.root}>
       <h1 className={styles.title}>Careers</h1>
+      <Slot slotId="careerPrelist" />
       <div className={styles.careerList}>
         <ul>
           {isLoading &&
@@ -38,6 +40,7 @@ export function Career() {
             ))}
         </ul>
       </div>
+      <Slot slotId="careerPostlist" />
       <Banner />
     </div>
   );
