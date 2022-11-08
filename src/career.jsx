@@ -5,7 +5,7 @@ import { CareerItem } from './components/career-item';
 
 const Banner = React.lazy(() => import('marketing/banner'));
 
-export default function Career() {
+export function Career() {
   const { data, isLoading } = useQuery(['careers'], () =>
     fetch('https://ecomm-service.herokuapp.com/job').then((res) => {
       if (res.ok) {
@@ -42,3 +42,5 @@ export default function Career() {
     </div>
   );
 }
+
+export default Career;

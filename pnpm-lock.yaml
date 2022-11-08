@@ -5,7 +5,7 @@ specifiers:
   '@babel/preset-env': ^7.20.2
   '@babel/preset-react': ^7.18.6
   '@heroicons/react': ^1.0.1
-  '@mkeeorg/federation-ui': ^1.2.0
+  '@mkeeorg/federation-ui': ^1.3.0
   autoprefixer: ^10.4.13
   babel-loader: ^9.1.0
   classnames: ^2.3.2
@@ -32,7 +32,7 @@ specifiers:
 
 dependencies:
   '@heroicons/react': 1.0.6_react@17.0.2
-  '@mkeeorg/federation-ui': 1.2.0_yr52dvjsfbgcxuwljhxvillj7i
+  '@mkeeorg/federation-ui': 1.3.0_yr52dvjsfbgcxuwljhxvillj7i
   classnames: 2.3.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -1359,8 +1359,8 @@ packages:
     resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
     dev: true
 
-  /@mkeeorg/federation-ui/1.2.0_yr52dvjsfbgcxuwljhxvillj7i:
-    resolution: {integrity: sha512-EodUs3hzUfQKQiTNgeMw0A4N/gIUygZ64pmWts24F8db3L+CMVFQ0IonLJaL26lDRSXgIM7I1UpYVYyp0OkK8Q==}
+  /@mkeeorg/federation-ui/1.3.0_yr52dvjsfbgcxuwljhxvillj7i:
+    resolution: {integrity: sha512-PhklSLef3U4ihlrDRxaRIIj9h8dTHPnvfnr3TCcoX1u7BoUmXNpEvJZCH+A9wbscbO0uEGx2ik+f3lo0FSCXzg==}
     peerDependencies:
       react: ^17.0.1
       react-dom: ^17.0.1
