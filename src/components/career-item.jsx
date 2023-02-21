@@ -1,6 +1,6 @@
-import cx from 'classnames';
 import { BriefcaseIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import * as React from 'react';
+import { prefixClasses as cx } from '../lib/prefix-classes';
 
 export const CareerItem = ({
   jobTitle,
@@ -20,10 +20,14 @@ export const CareerItem = ({
         className
       )}
     >
-      <div className="flex items-center p-4 sm:px-6">
-        <div className="flex-1 min-w-0 sm:flex sm:justify-between sm:items-center">
+      <div className={cx('flex items-center p-4 sm:px-6')}>
+        <div
+          className={cx(
+            'flex-1 min-w-0 sm:flex sm:justify-between sm:items-center'
+          )}
+        >
           <div>
-            <div className="text-sm font-medium text-pink-600 truncate">
+            <div className={cx('text-sm font-medium text-pink-600 truncate')}>
               {jobTitle}{' '}
               {isLoading && (
                 <span className={cx('inline-block bg-gray-300 w-36 h-5')} />
@@ -77,7 +81,7 @@ export const CareerItem = ({
             )}
           </div>
         </div>
-        <div className="ml-5 flex-shrink-0">
+        <div className={cx('ml-5 flex-shrink-0')}>
           <ChevronRightIcon className={cx('h-5 w-5 text-gray-400')} />
         </div>
       </div>

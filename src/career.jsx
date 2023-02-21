@@ -1,7 +1,9 @@
-import cx from 'classnames';
 import * as React from 'react';
 import { useQuery } from 'react-query';
 import { CareerItem } from './components/career-item';
+import { prefixClasses as cx } from './lib/prefix-classes';
+import './styles.tw.css';
+import './career.css';
 
 const Banner = React.lazy(() => import('marketing/banner'));
 
@@ -19,9 +21,7 @@ export function Career() {
 
   return (
     <div className={cx('max-w-6xl mx-auto p-2')}>
-      <h1 className={cx('text-3xl mb-6 text-center font-bold sm:text-5xl')}>
-        Careers
-      </h1>
+      <h1 className="careerTitle">Careers</h1>
       <div className={cx('bg-white shadow')}>
         <ul>
           {isLoading &&

@@ -20,6 +20,7 @@ specifiers:
   postcss: ^8.4.21
   postcss-cli: ^10.1.0
   postcss-loader: ^7.0.2
+  postcss-prefixer: ^2.1.3
   react: ^17.0.1
   react-dom: ^17.0.1
   react-query: ^3.39.3
@@ -57,6 +58,7 @@ devDependencies:
   postcss: 8.4.21
   postcss-cli: 10.1.0_postcss@8.4.21
   postcss-loader: 7.0.2_6jdsrmfenkuhhw3gx4zvjlznce
+  postcss-prefixer: 2.1.3_postcss@8.4.21
   regex-escape: 3.4.10
   style-loader: 3.3.1_webpack@5.75.0
   tailwindcss: 3.2.7_postcss@8.4.21
@@ -2444,6 +2446,13 @@ packages:
       nth-check: 2.1.1
     dev: true
 
+  /css-selector-tokenizer/0.7.3:
+    resolution: {integrity: sha512-jWQv3oCEL5kMErj4wRnK/OPoBi0D+P1FR2cDCKYPaMeD2eW3/mttav8HT4hT1CKopiJI/psEULjkClhvJo4Lvg==}
+    dependencies:
+      cssesc: 3.0.0
+      fastparse: 1.1.2
+    dev: true
+
   /css-tree/1.1.3:
     resolution: {integrity: sha512-tRpdppF7TRazZrjJ6v3stzv93qxRcSsFmW6cX0Zm2NVKpxE1WV1HblnghVv9TreireHkqI/VDEsfolRF1p6y7Q==}
     engines: {node: '>=8.0.0'}
@@ -2864,6 +2873,10 @@ packages:
   /fastest-levenshtein/1.0.16:
     resolution: {integrity: sha512-eRnCtTTtGZFpQCwhJiUOuxPQWRXVKYDn0b2PeHfXL6/Zi53SLAzAHfVhVWK2AryC/WH05kGfxhFIPvTF0SXQzg==}
     engines: {node: '>= 4.9.1'}
+    dev: true
+
+  /fastparse/1.1.2:
+    resolution: {integrity: sha512-483XLLxTVIwWK3QTrMGRqUfUpoOs/0hbQrl2oz4J0pAcm3A3bu84wxTFqGqkJzewCLdME38xJLJAxBABfQT8sQ==}
     dev: true
 
   /fastq/1.15.0:
@@ -4276,6 +4289,16 @@ packages:
       cssnano-utils: 3.1.0_postcss@8.4.21
       postcss: 8.4.21
       postcss-value-parser: 4.2.0
+    dev: true
+
+  /postcss-prefixer/2.1.3_postcss@8.4.21:
+    resolution: {integrity: sha512-1ixOH5d9bt/YXw3iJ8FmBAqdviVTj1pdYSDvUDz4dY95tX/hKDXMa34YkQvXGRKkAMoehUd5pKVaF+D1qTbQOg==}
+    engines: {node: '>=6.0.0'}
+    peerDependencies:
+      postcss: '>= 5.0.0'
+    dependencies:
+      css-selector-tokenizer: 0.7.3
+      postcss: 8.4.21
     dev: true
 
   /postcss-reduce-initial/5.1.1_postcss@8.4.21:
