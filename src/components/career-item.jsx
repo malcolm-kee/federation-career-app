@@ -1,7 +1,6 @@
-import cx from 'classnames';
 import { BriefcaseIcon, ChevronRightIcon } from '@heroicons/react/solid';
-import styles from './career-item.module.css';
 import * as React from 'react';
+import { prefixClasses as cx } from '../lib/prefix-classes';
 
 export const CareerItem = ({
   jobTitle,
@@ -15,49 +14,53 @@ export const CareerItem = ({
   return (
     <a
       href="#"
-      className={cx(styles.root, isLoading && styles.rootLoading, className)}
+      className={cx(
+        'block transition-all focus:outline-none focus:bg-gray-100 hover:outline-none hover:bg-gray-100 group/careeritem',
+        isLoading && 'animate-pulse',
+        className
+      )}
     >
-      <div className={styles.container}>
-        <div className={styles.content}>
+      <div className={cx('flex items-center p-4 sm:px-6')}>
+        <div
+          className={cx(
+            'flex-1 min-w-0 sm:flex sm:justify-between sm:items-center'
+          )}
+        >
           <div>
-            <div className={styles.title}>
+            <div className={cx('text-sm font-medium text-pink-600 truncate')}>
               {jobTitle}{' '}
               {isLoading && (
-                <span
-                  className={cx(styles.placeholder, styles.titlePlaceholder)}
-                />
+                <span className={cx('inline-block bg-gray-300 w-36 h-5')} />
               )}
-              <span className={styles.department}>
+              <span className={cx('ml-1 font-normal text-gray-500')}>
                 in {department}
                 {isLoading && (
-                  <span
-                    className={cx(
-                      styles.placeholder,
-                      styles.departmentPlaceholder
-                    )}
-                  />
+                  <span className={cx('inline-block bg-gray-300 w-24 h-5')} />
                 )}
               </span>
             </div>
-            <div className={styles.description}>
-              <BriefcaseIcon className={cx(styles.icon, styles.descIcon)} />
+            <div className={cx('flex items-center text-sm mt-2 text-gray-500')}>
+              <BriefcaseIcon
+                className={cx('h-5 w-5 text-gray-400 flex-shrink-0 mr-[6px]')}
+              />
               <span>
                 Level: {level}
                 {isLoading && (
-                  <span
-                    className={cx(styles.placeholder, styles.descPlaceholder)}
-                  />
+                  <span className={cx('inline-block bg-gray-300 w-20 h-4')} />
                 )}
               </span>
             </div>
           </div>
-          <div className={styles.applicants}>
+          <div
+            className={cx(
+              'flex flex-row-reverse justify-end mt-4 flex-shrink-0 overflow-hidden transition-all gap-0 group-hover/careeritem:gap-2 sm:mt-0'
+            )}
+          >
             {isLoading ? (
               Array.from({ length: 3 }).map((_, index) => (
                 <div
                   className={cx(
-                    styles.placeholder,
-                    styles.applicationPreviewPlaceholder
+                    'inline-block bg-gray-300 w-6 h-6 rounded-full outline-2 outline-white'
                   )}
                   key={index}
                 />
@@ -66,7 +69,9 @@ export const CareerItem = ({
               <>
                 {images.map((src) => (
                   <img
-                    className={styles.applicantPreview}
+                    className={cx(
+                      'inline-block h-6 w-6 rounded-full text-white outline-2 outline-white'
+                    )}
                     src={src}
                     alt=""
                     key={src}
@@ -76,8 +81,8 @@ export const CareerItem = ({
             )}
           </div>
         </div>
-        <div className={styles.moreSection}>
-          <ChevronRightIcon className={styles.icon} />
+        <div className={cx('ml-5 flex-shrink-0')}>
+          <ChevronRightIcon className={cx('h-5 w-5 text-gray-400')} />
         </div>
       </div>
     </a>

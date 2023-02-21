@@ -46,28 +46,74 @@ module.exports = (env, { mode }) => {
       rules: [
         {
           test: /\.css$/i,
-          use: [
+          oneOf: [
             {
-              loader: MiniCssExtractPlugin.loader,
-            },
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true,
-                importLoaders: 1,
-                modules: {
-                  auto: true,
-                  localIdentName: isProd
-                    ? '[hash:base64]'
-                    : '[path][name]__[local]',
+              test: /\.tw\.css$/i,
+              use: [
+                {
+                  loader: MiniCssExtractPlugin.loader,
                 },
-              },
+                {
+                  loader: 'css-loader',
+                  options: {
+                    sourceMap: true,
+                    importLoaders: 1,
+                    modules: {
+                      auto: true,
+                      localIdentName: isProd
+                        ? '[hash:base64]'
+                        : '[path][name]__[local]',
+                    },
+                  },
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true,
+                    postcssOptions: {
+                      plugins: {
+                        tailwindcss: {},
+                        autoprefixer: {},
+                        'postcss-prefixer': {
+                          prefix: 'cr-',
+                        },
+                      },
+                    },
+                  },
+                },
+              ],
             },
             {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-              },
+              use: [
+                {
+                  loader: MiniCssExtractPlugin.loader,
+                },
+                {
+                  loader: 'css-loader',
+                  options: {
+                    sourceMap: true,
+                    importLoaders: 1,
+                    modules: {
+                      auto: true,
+                      localIdentName: isProd
+                        ? '[hash:base64]'
+                        : '[path][name]__[local]',
+                    },
+                  },
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true,
+                    postcssOptions: {
+                      plugins: {
+                        tailwindcss: {},
+                        autoprefixer: {},
+                      },
+                    },
+                  },
+                },
+              ],
             },
           ],
         },
